@@ -97,43 +97,47 @@ void Insert(BinarySearchTreeNode* &root, int z) {
 }
 
 //以v为根的子树替换一棵以u为根的子树
-void TransParent(BinarySearchTreeNode* & root, BinarySearchTreeNode* u, BinarySearchTreeNode*  v) {
-	if(u->parent == NULL) {
-		root = v;
-	} else {
-		BinarySearchTreeNode* Parent = u->parent;
-		if (u == Parent->left) {
-			Parent->left = v;
-		} else {
-			Parent->right = v;
-		}
-	}
-	if (v != NULL) {
-		v->parent = u->parent;
-	}
+void TransPlant(BinarySearchTreeNode* & root, BinarySearchTreeNode* u, BinarySearchTreeNode* & v) {
+  if(u->parent == NULL) {
+    root = v;
+  } else {
+    BinarySearchTreeNode* & Parent = u->parent;
+    if (u == Parent->left) {
+      Parent->left = v;
+    } else {
+      Parent->right = v;
+    }
+  }
+  if (v != NULL) {
+    v->parent = u->parent;
+  }
 }
 
-void Delete(BinarySearchTreeNode* &root, BinarySearchTreeNode* z) { 	//如果传入的参数是int,那就调用一次Search
-	if (z == NULL) {
-		cout << "Not exist!" << endl;
-		return;
-	}
-	if (z->left == NULL) { 
-		TransParent(root, z, z->right);
-	} else if (z->right == NULL) {
-		TransParent(root, z, z->left);
-	} else { 	//上两种情况是只有一个子树，下面的情况是有两个子树
-		BinarySearchTreeNode* y = Min(z->right);
-		if (y->parent != z) {		//如果y不是z的右子树的根节点, 把y换到z的右子树
-			TransParent(root, y, y->right);
-			y->right = z->right;
-			y->right->parent = y;
-		}
-
-		TransParent(root, z, y);
-		y->left = z->left;
-		y->left->parent = y;
-	}
+void Delete(BinarySearchTreeNode* &root, BinarySearchTreeNode* z) {     //如果传入的参数是int,那就调用一次Search
+  if (root == NULL) {
+    cout << "Already empty!" << endl;
+    return;
+  }
+  if (z == NULL) {
+    cout << "Not exist!" << endl;
+    return;
+  }
+  if (z->left == NULL) { 
+    TransPlant(root, z, z->right);
+  } else if (z->right == NULL) {
+    TransPlant(root, z, z->left);
+  } else { //上两种情况是只有一个子树，或者没有子树，下面的情况是有两个子树
+  	BinarySearchTreeNode* y = Min(z->right);
+  	if (y->parent != z) {   //如果y不是z的右子树, 把y换到z的右子树
+  	  TransPlant(root, y, y->right);
+  	  y->right = z->right;
+  	  y->right->parent = y;
+  	}
+	
+  	TransPlant(root, z, y);
+  	y->left = z->left;
+  	y->left->parent = y;
+  }
 }
 
 int main() {
