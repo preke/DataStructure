@@ -23,7 +23,6 @@ RBTreeNode* Tnull;
 
 void InOrder(RBTreeNode* root);
 void PreOrder(RBTreeNode* root);
-//左旋
 
 void Debug(RBTreeNode* root) {
 	cout << "here" << endl;
@@ -33,6 +32,7 @@ void Debug(RBTreeNode* root) {
 	InOrder(root);
 }
 
+//左旋
 void LeftRotate(RBTreeNode* &root, RBTreeNode* x) {
 	if (x == NULL) {
 		cout << "Wrong input!\n";
@@ -159,6 +159,7 @@ void PreOrder(RBTreeNode* root) {
 		PreOrder(root->right);
 	}
 }
+
 //先在外面创建好节点z再插入，过程很像二叉搜索树的插入
 void Insert(RBTreeNode* &root, RBTreeNode* z) {
 	
@@ -201,7 +202,6 @@ RBTreeNode* Min(RBTreeNode* root) {
 
 //以v为根的子树替换一棵以u为根的子树
 void TransPlant(RBTreeNode* & root, RBTreeNode* u, RBTreeNode* & v) {
-	
 	if (u->parent == Tnull) {
 		root = v;		
 	} else if (u == u->parent->left) {
@@ -240,9 +240,7 @@ void DeleteFixUp(RBTreeNode* & root, RBTreeNode* x) {
 				LeftRotate(root, x->parent);
 
 				x = root;
-			}
-
-		
+			}		
 		} else {
 			w = x->parent->left;
 			if (w->color == RED) { //case 1 w的颜色为红色
