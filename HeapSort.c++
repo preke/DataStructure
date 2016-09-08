@@ -10,7 +10,7 @@ void MaxHeapify(int* a, int i, int heap_size) {
 	int maxn = i;
 	if (LEFT(i) <= heap_size && a[LEFT(i)] > a[i]) {
 		maxn = LEFT(i); 
-	} else maxn = i;
+	}
 	if (RIGHT(i) <= heap_size && a[RIGHT(i)] > a[maxn]) {
 		maxn = RIGHT(i);
 	}
