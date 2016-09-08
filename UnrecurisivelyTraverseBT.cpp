@@ -14,7 +14,7 @@ struct BinaryTreeNode {
 
 void PreOrder(BinaryTreeNode* root) {
 	stack<BinaryTreeNode* > s;
-	while (root && !s.empty()) {
+	while (root || !s.empty()) {
 		while(root) {
 			cout << root->value << " ";
 			s.push(root);
@@ -30,15 +30,17 @@ void PreOrder(BinaryTreeNode* root) {
 
 void InOrder(BinaryTreeNode* root) {
 	stack<BinaryTreeNode* > s;
-	while(root) {
-		s.push(root);
-		root = root->left;
-	}
-	while(!s.empty()) {
-		root = s.top();
-		s.pop();
-		cout << root->value << " ";
-		root = root->right;
+	while (root || !s.empty()) {
+		while(root) {
+			s.push(root);
+			root = root->left;
+		}
+		while(!s.empty()) {
+			root = s.top();
+			s.pop();
+			cout << root->value << " ";
+			root = root->right;
+		}
 	}
 
 }
